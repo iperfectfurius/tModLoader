@@ -1,0 +1,11 @@
+--- src/TerrariaNetCore/Terraria/GameContent/UI/BigProgressBar/CommonBossBigProgressBar.cs
++++ src/tModLoader/Terraria/GameContent/UI/BigProgressBar/CommonBossBigProgressBar.cs
+@@ -10,7 +_,7 @@
+ 
+ 	public bool ValidateAndCollectNecessaryInfo(ref BigProgressBarInfo info)
+ 	{
+-		if (info.npcIndexToAimAt < 0 || info.npcIndexToAimAt > 200)
++		if (info.npcIndexToAimAt < 0 || info.npcIndexToAimAt > Main.maxNPCs)
+ 			return false;
+ 
+ 		NPC nPC = Main.npc[info.npcIndexToAimAt];

@@ -81,7 +81,7 @@ public static class ProjectileLoader
 		Array.Resize(ref Projectile.perIDStaticNPCImmunity, ProjectileCount);
 
 		for (int i = 0; i < ProjectileCount; i++) {
-			Projectile.perIDStaticNPCImmunity[i] = new uint[200];
+			Projectile.perIDStaticNPCImmunity[i] = new uint[Main.maxNPCs];
 		}
 	}
 

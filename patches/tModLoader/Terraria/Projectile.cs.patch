@@ -157,7 +157,7 @@
 +	/// </summary>
  	public int penetrate = 1;
 -	private int[] localNPCImmunity = new int[200];
-+	public int[] localNPCImmunity = new int[200];
++	public int[] localNPCImmunity = new int[Main.maxNPCs];
 +	/// <summary>
 +	/// If true, this projectile manages it's own immunity timers for each npc.<br/>
 +	/// Use this rather than <see cref="usesIDStaticNPCImmunity"/> if you want multiple projectiles of the same type to have a chance to attack rapidly, but don't want a single projectile to hit rapidly.<br/>
@@ -751,6 +751,21 @@
  		return num;
  	}
  
+@@ -9478,11 +_,11 @@
+ 			return;
+ 
+ 		Main.player[Main.myPlayer].ghostDmg += num;
+-		int[] array = new int[200];
++		int[] array = new int[Main.maxNPCs];
+ 		int num4 = 0;
+-		_ = new int[200];
++		_ = new int[Main.maxNPCs];
+ 		int num5 = 0;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			if (!Main.npc[i].CanBeChasedBy(this))
+ 				continue;
+ 
 @@ -9760,11 +_,18 @@
  
  	public void Damage()
@@ -771,6 +786,15 @@
  			BombsHurtPlayers(rectangle, Main.myPlayer);
  			return;
  		}
+@@ -9888,7 +_,7 @@
+ 				}
+ 
+ 				bool flag4 = true;
+-				for (int i = 0; i < 200 && flag4; i++) {
++				for (int i = 0; i < 500 && flag4; i++) {
+ 					if (!Main.npc[i].active)
+ 						continue;
+ 
 @@ -9899,6 +_,14 @@
  					if (!((!Main.npc[i].dontTakeDamage || NPCID.Sets.ZappingJellyfish[Main.npc[i].type]) && flag5) || (Main.npc[i].aiStyle == 112 && Main.npc[i].ai[2] > 1f))
  						continue;
@@ -981,6 +1005,15 @@
  									if (type == 294)
  										damage = (int)((double)damage * 0.9);
  
+@@ -10611,7 +_,7 @@
+ 										int num29 = 0;
+ 										int num30 = 700;
+ 										int num31 = 20;
+-										for (int l = 0; l < 200; l++) {
++										for (int l = 0; l < Main.maxNPCs; l++) {
+ 											if (l == i || !Main.npc[l].CanBeChasedBy(this))
+ 												continue;
+ 
 @@ -10633,18 +_,26 @@
  											netUpdate = true;
  										}
@@ -1137,6 +1170,24 @@
  					if (!player3.immune)
  						StatusPvP(m);
  
+@@ -11191,7 +_,7 @@
+ 		}
+ 
+ 		if (type == 10 && Main.netMode != 1) {
+-			for (int n = 0; n < 200; n++) {
++			for (int n = 0; n < Main.maxNPCs; n++) {
+ 				NPC nPC2 = Main.npc[n];
+ 				if (!nPC2.active)
+ 					continue;
+@@ -11221,7 +_,7 @@
+ 
+ 		if ((type == 11 || type == 463) && Main.netMode != 1) {
+ 			bool crimson = type == 463;
+-			for (int num48 = 0; num48 < 200; num48++) {
++			for (int num48 = 0; num48 < Main.maxNPCs; num48++) {
+ 				if (Main.npc[num48].active) {
+ 					Rectangle value2 = new Rectangle((int)Main.npc[num48].position.X, (int)Main.npc[num48].position.Y, Main.npc[num48].width, Main.npc[num48].height);
+ 					if (rectangle.Intersects(value2))
 @@ -11248,10 +_,14 @@
  			case 919:
  			case 923:
@@ -1222,6 +1273,15 @@
  	{
  		ParticleOrchestrator.RequestParticleSpawn(clientOnly: false, ParticleOrchestraType.BlackLightningHit, new ParticleOrchestraSettings {
  			PositionInWorld = targetNPC.Center
+@@ -11474,7 +_,7 @@
+ 
+ 		localAI[0] = 1000f;
+ 		List<NPC> list = new List<NPC>();
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.CanBeChasedBy(this) && Distance(nPC.Center) < 800f)
+ 				list.Add(nPC);
 @@ -11581,13 +_,19 @@
  					WorldGen.KillTile(i, j);
  					if (Main.netMode != 0)
@@ -1280,6 +1340,15 @@
  			}
  
  			if (minion && numUpdates == -1 && type != 625 && type != 628) {
+@@ -12514,7 +_,7 @@
+ 			}
+ 
+ 			if (usesLocalNPCImmunity) {
+-				for (int k = 0; k < 200; k++) {
++				for (int k = 0; k < Main.maxNPCs; k++) {
+ 					if (localNPCImmunity[k] > 0)
+ 						localNPCImmunity[k]--;
+ 				}
 @@ -12965,9 +_,16 @@
  		}
  	}
@@ -1348,6 +1417,15 @@
  				if (type == 663 || type == 665 || type == 667 || type == 677 || type == 678 || type == 679 || type == 691 || type == 692 || type == 693 || type == 688 || type == 689 || type == 690) {
  					position += velocity;
  					velocity = Vector2.Zero;
+@@ -14017,7 +_,7 @@
+ 								int num30 = 0;
+ 								int num31 = 700;
+ 								int num32 = 20;
+-								for (int m = 0; m < 200; m++) {
++								for (int m = 0; m < Main.maxNPCs; m++) {
+ 									if (!Main.npc[m].CanBeChasedBy(this))
+ 										continue;
+ 
 @@ -14493,7 +_,7 @@
  								}
  							}
@@ -1495,6 +1573,171 @@
  		if (aiStyle == 1) {
  			AI_001();
  		}
+@@ -16409,7 +_,7 @@
+ 			}
+ 			else if (type == 166) {
+ 				if (owner == Main.myPlayer && this.ai[1] == 1f) {
+-					for (int num23 = 0; num23 < 200; num23++) {
++					for (int num23 = 0; num23 < Main.maxNPCs; num23++) {
+ 						if (Main.npc[num23].active && Main.npc[num23].townNPC && Colliding(base.Hitbox, Main.npc[num23].Hitbox)) {
+ 							Kill();
+ 							return;
+@@ -16658,7 +_,7 @@
+ 					float num42 = 800f;
+ 					bool flag2 = false;
+ 					if (this.ai[1] > 10f && this.ai[1] < 360f) {
+-						for (int num43 = 0; num43 < 200; num43++) {
++						for (int num43 = 0; num43 < Main.maxNPCs; num43++) {
+ 							if (Main.npc[num43].CanBeChasedBy(this)) {
+ 								float num44 = Main.npc[num43].position.X + (float)(Main.npc[num43].width / 2);
+ 								float num45 = Main.npc[num43].position.Y + (float)(Main.npc[num43].height / 2);
+@@ -17960,7 +_,7 @@
+ 				}
+ 
+ 				Rectangle rectangle2 = new Rectangle((int)base.position.X, (int)base.position.Y, width, height);
+-				for (int num164 = 0; num164 < 200; num164++) {
++				for (int num164 = 0; num164 < Main.maxNPCs; num164++) {
+ 					if (Main.npc[num164].CanBeChasedBy(this, ignoreDontTakeDamage: true)) {
+ 						Rectangle value2 = new Rectangle((int)Main.npc[num164].position.X, (int)Main.npc[num164].position.Y, Main.npc[num164].width, Main.npc[num164].height);
+ 						if (rectangle2.Intersects(value2)) {
+@@ -19724,7 +_,7 @@
+ 			this.ai[0] += 1f;
+ 			if (this.ai[0] > 30f) {
+ 				this.ai[0] = 30f;
+-				for (int num306 = 0; num306 < 200; num306++) {
++				for (int num306 = 0; num306 < Main.maxNPCs; num306++) {
+ 					if (Main.npc[num306].CanBeChasedBy(this) && (!Main.npc[num306].wet || Main.npc[num306].type == 370 || type == 307)) {
+ 						float num307 = Main.npc[num306].position.X + (float)(Main.npc[num306].width / 2);
+ 						float num308 = Main.npc[num306].position.Y + (float)(Main.npc[num306].height / 2);
+@@ -19953,7 +_,7 @@
+ 					float num326 = base.position.Y;
+ 					float num327 = 3000f;
+ 					int num328 = -1;
+-					for (int num329 = 0; num329 < 200; num329++) {
++					for (int num329 = 0; num329 < Main.maxNPCs; num329++) {
+ 						if (Main.npc[num329].CanBeChasedBy(this)) {
+ 							float x = Main.npc[num329].Center.X;
+ 							float y = Main.npc[num329].Center.Y;
+@@ -20119,7 +_,7 @@
+ 			float y2 = base.position.Y;
+ 			float num334 = 700f;
+ 			NPC nPC = null;
+-			for (int num335 = 0; num335 < 200; num335++) {
++			for (int num335 = 0; num335 < Main.maxNPCs; num335++) {
+ 				if (Main.npc[num335].CanBeChasedBy(this)) {
+ 					float num336 = Main.npc[num335].position.X + (float)(Main.npc[num335].width / 2);
+ 					float num337 = Main.npc[num335].position.Y + (float)(Main.npc[num335].height / 2);
+@@ -20742,7 +_,7 @@
+ 			bool flag21 = false;
+ 			int num401 = 0;
+ 			if (type == 297) {
+-				for (int num402 = 0; num402 < 200; num402++) {
++				for (int num402 = 0; num402 < Main.maxNPCs; num402++) {
+ 					if (Main.npc[num402].CanBeChasedBy(this) && Distance(Main.npc[num402].Center) < num400 && Collision.CanHit(base.Center, 1, 1, Main.npc[num402].Center, 1, 1)) {
+ 						float num403 = Main.npc[num402].position.X + (float)(Main.npc[num402].width / 2);
+ 						float num404 = Main.npc[num402].position.Y + (float)(Main.npc[num402].height / 2);
+@@ -20924,7 +_,7 @@
+ 			}
+ 
+ 			if (!flag22) {
+-				for (int num446 = 0; num446 < 200; num446++) {
++				for (int num446 = 0; num446 < Main.maxNPCs; num446++) {
+ 					if (Main.npc[num446].CanBeChasedBy(this)) {
+ 						float num447 = Main.npc[num446].position.X + (float)(Main.npc[num446].width / 2);
+ 						float num448 = Main.npc[num446].position.Y + (float)(Main.npc[num446].height / 2);
+@@ -21113,7 +_,7 @@
+ 				}
+ 
+ 				if (!flag23) {
+-					for (int num472 = 0; num472 < 200; num472++) {
++					for (int num472 = 0; num472 < Main.maxNPCs; num472++) {
+ 						if (Main.npc[num472].CanBeChasedBy(this)) {
+ 							float num473 = Main.npc[num472].position.X + (float)(Main.npc[num472].width / 2);
+ 							float num474 = Main.npc[num472].position.Y + (float)(Main.npc[num472].height / 2);
+@@ -21271,7 +_,7 @@
+ 				}
+ 				else {
+ 					float num492 = 1000f;
+-					for (int num493 = 0; num493 < 200; num493++) {
++					for (int num493 = 0; num493 < Main.maxNPCs; num493++) {
+ 						NPC nPC3 = Main.npc[num493];
+ 						if (nPC3.CanBeChasedBy(this) && !NPCID.Sets.CountsAsCritter[nPC3.type]) {
+ 							float x4 = nPC3.Center.X;
+@@ -21381,9 +_,9 @@
+ 				int num498 = (int)this.ai[0];
+ 				if (Main.myPlayer == owner && (num498 == -1 || !Main.npc[num498].CanBeChasedBy(this))) {
+ 					num498 = -1;
+-					int[] array = new int[200];
++					int[] array = new int[Main.maxNPCs];
+ 					int num499 = 0;
+-					for (int num500 = 0; num500 < 200; num500++) {
++					for (int num500 = 0; num500 < Main.maxNPCs; num500++) {
+ 						if (Main.npc[num500].CanBeChasedBy(this)) {
+ 							float num501 = Math.Abs(Main.npc[num500].position.X + (float)(Main.npc[num500].width / 2) - base.position.X + (float)(width / 2)) + Math.Abs(Main.npc[num500].position.Y + (float)(Main.npc[num500].height / 2) - base.position.Y + (float)(height / 2));
+ 							if (num501 < 800f) {
+@@ -21445,7 +_,7 @@
+ 
+ 				if (owner == Main.myPlayer) {
+ 					Rectangle rectangle4 = new Rectangle((int)base.position.X, (int)base.position.Y, width, height);
+-					for (int num513 = 0; num513 < 200; num513++) {
++					for (int num513 = 0; num513 < Main.maxNPCs; num513++) {
+ 						if (Main.npc[num513].active && !Main.npc[num513].dontTakeDamage && Main.npc[num513].lifeMax > 1) {
+ 							Rectangle value4 = new Rectangle((int)Main.npc[num513].position.X, (int)Main.npc[num513].position.Y, Main.npc[num513].width, Main.npc[num513].height);
+ 							if (rectangle4.Intersects(value4)) {
+@@ -21581,7 +_,7 @@
+ 			Vector2 center3 = base.position;
+ 			bool flag24 = false;
+ 			float num529 = 2000f;
+-			for (int num530 = 0; num530 < 200; num530++) {
++			for (int num530 = 0; num530 < Main.maxNPCs; num530++) {
+ 				NPC nPC4 = Main.npc[num530];
+ 				if (nPC4.CanBeChasedBy(this)) {
+ 					float num531 = Vector2.Distance(nPC4.Center, base.Center);
+@@ -22002,7 +_,7 @@
+ 			}
+ 
+ 			if (!flag29) {
+-				for (int num569 = 0; num569 < 200; num569++) {
++				for (int num569 = 0; num569 < Main.maxNPCs; num569++) {
+ 					NPC nPC5 = Main.npc[num569];
+ 					if (nPC5.CanBeChasedBy(this)) {
+ 						float num570 = Vector2.Distance(nPC5.Center, base.Center);
+@@ -22405,7 +_,7 @@
+ 			if (this.ai[0] == 0f) {
+ 				float num598 = 650f;
+ 				int num599 = -1;
+-				for (int num600 = 0; num600 < 200; num600++) {
++				for (int num600 = 0; num600 < Main.maxNPCs; num600++) {
+ 					NPC nPC6 = Main.npc[num600];
+ 					float num601 = (nPC6.Center - base.Center).Length();
+ 					if (!(num601 >= num598) && nPC6.CanBeChasedBy(this) && Collision.CanHit(base.position, width, height, nPC6.position, nPC6.width, nPC6.height)) {
+@@ -22477,7 +_,7 @@
+ 				localAI[0]--;
+ 
+ 			if (this.ai[0] == 0f && localAI[0] == 0f) {
+-				for (int num608 = 0; num608 < 200; num608++) {
++				for (int num608 = 0; num608 < Main.maxNPCs; num608++) {
+ 					NPC nPC7 = Main.npc[num608];
+ 					if (nPC7.CanBeChasedBy(this) && (this.ai[0] == 0f || this.ai[0] == (float)(num608 + 1))) {
+ 						Vector2 center7 = nPC7.Center;
+@@ -23065,7 +_,7 @@
+ 				int num682 = -1;
+ 				Vector2 vector56 = base.Center;
+ 				float num683 = 250f;
+-				for (int num684 = 0; num684 < 200; num684++) {
++				for (int num684 = 0; num684 < Main.maxNPCs; num684++) {
+ 					NPC nPC9 = Main.npc[num684];
+ 					if (nPC9.CanBeChasedBy(this)) {
+ 						Vector2 center9 = nPC9.Center;
+@@ -23137,7 +_,7 @@
+ 				int num690 = -1;
+ 				Vector2 center11 = base.Center;
+ 				float num691 = 250f;
+-				for (int num692 = 0; num692 < 200; num692++) {
++				for (int num692 = 0; num692 < Main.maxNPCs; num692++) {
+ 					NPC nPC10 = Main.npc[num692];
+ 					if (nPC10.CanBeChasedBy(this)) {
+ 						Vector2 center12 = nPC10.Center;
 @@ -24212,7 +_,7 @@
  					int num799 = (int)base.Center.Y / 16;
  					for (int num800 = num798 - num797; num800 <= num798 + num797; num800++) {
@@ -1504,6 +1747,69 @@
  								int num802 = Dust.NewDust(new Vector2(num800 * 16, num801 * 16), 16, 16, 204, 0f, 0f, 150, default(Color), 0.3f);
  								Main.dust[num802].fadeIn = 0.75f;
  								Dust dust2 = Main.dust[num802];
+@@ -24435,7 +_,7 @@
+ 			if (Main.netMode == 1)
+ 				return;
+ 
+-			for (int num814 = 0; num814 < 200; num814++) {
++			for (int num814 = 0; num814 < Main.maxNPCs; num814++) {
+ 				NPC nPC12 = Main.npc[num814];
+ 				if (nPC12.active && !nPC12.buffImmune[num811] && nPC12.Center.Distance(base.Center) <= num813)
+ 					nPC12.AddBuff(num811, num812);
+@@ -25123,7 +_,7 @@
+ 			bool flag47 = false;
+ 			Vector2 vector106 = new Vector2(0f, 0f);
+ 			float num853 = 340f;
+-			for (int num854 = 0; num854 < 200; num854++) {
++			for (int num854 = 0; num854 < Main.maxNPCs; num854++) {
+ 				if (Main.npc[num854].CanBeChasedBy(this)) {
+ 					float num855 = Main.npc[num854].position.X + (float)(Main.npc[num854].width / 2);
+ 					float num856 = Main.npc[num854].position.Y + (float)(Main.npc[num854].height / 2);
+@@ -25952,7 +_,7 @@
+ 				if (localAI[0] >= (float)(60 * num907)) {
+ 					flag52 = true;
+ 				}
+-				else if (num908 < 0 || num908 >= 200) {
++				else if (num908 < 0 || num908 >= 500) {
+ 					flag52 = true;
+ 				}
+ 				else if (Main.npc[num908].active && !Main.npc[num908].dontTakeDamage) {
+@@ -25969,7 +_,7 @@
+ 					Kill();
+ 
+ 				if (!flag52 && type == 971) {
+-					if (num908 > 0 && num908 < 200 && timeLeft % 2 == 0) {
++					if (num908 > 0 && num908 < 500 && timeLeft % 2 == 0) {
+ 						Vector2 vector138 = center17 - velocity.SafeNormalize(Vector2.Zero) * 8f;
+ 						Vector2 value16 = Main.npc[num908].velocity + new Vector2(Main.rand.NextFloatDirection() * 0.35f, 2.5f);
+ 						Dust dust47 = Dust.NewDustPerfect(vector138, 4, value16, 0, new Color(120, 50, 120), 0.65f);
+@@ -25984,7 +_,7 @@
+ 				}
+ 
+ 				if (!flag52 && type == 975) {
+-					if (num908 > 0 && num908 < 200 && timeLeft % 2 == 0) {
++					if (num908 > 0 && num908 < 500 && timeLeft % 2 == 0) {
+ 						Vector2 vector139 = center17;
+ 						Vector2 vector140 = velocity.SafeNormalize(Vector2.Zero) * -7f + velocity.SafeNormalize(Vector2.Zero).RotatedByRandom(0.19634954631328583);
+ 						Dust dust48 = Dust.NewDustPerfect(vector139, 5, Vector2.Zero, 0, default(Color), 1.5f);
+@@ -26349,7 +_,7 @@
+ 					bool flag57 = false;
+ 					int num936 = 0;
+ 					if (this.ai[1] == 0f) {
+-						for (int num937 = 0; num937 < 200; num937++) {
++						for (int num937 = 0; num937 < Main.maxNPCs; num937++) {
+ 							if (Main.npc[num937].CanBeChasedBy(this)) {
+ 								Vector2 center18 = Main.npc[num937].Center;
+ 								if (Distance(center18) < num935 && Collision.CanHit(new Vector2(base.position.X + (float)(width / 2), base.position.Y + (float)(height / 2)), 1, 1, Main.npc[num937].position, Main.npc[num937].width, Main.npc[num937].height)) {
+@@ -26640,7 +_,7 @@
+ 				}
+ 
+ 				if (num953 < 0) {
+-					for (int num956 = 0; num956 < 200; num956++) {
++					for (int num956 = 0; num956 < Main.maxNPCs; num956++) {
+ 						NPC nPC14 = Main.npc[num956];
+ 						if (nPC14.CanBeChasedBy(this)) {
+ 							float num957 = Distance(nPC14.Center);
 @@ -27175,7 +_,7 @@
  					for (int num994 = num992 - num991; num994 <= num992 + num991; num994++) {
  						for (int num995 = num993 - num991; num995 <= num993 + num991; num995++) {
@@ -1513,6 +1819,33 @@
  								float num997 = Distance(new Vector2(num994 * 16 + 8, num995 * 16 + 8));
  								if (num997 < num990 || num990 == -1f) {
  									num990 = num997;
+@@ -27215,7 +_,7 @@
+ 			int num1004 = -1;
+ 			float num1005 = 300f;
+ 			float num1006 = 500f;
+-			for (int num1007 = 0; num1007 < 200; num1007++) {
++			for (int num1007 = 0; num1007 < Main.maxNPCs; num1007++) {
+ 				NPC nPC16 = Main.npc[num1007];
+ 				if (!nPC16.active || !nPC16.chaseable || nPC16.dontTakeDamage || nPC16.immortal)
+ 					continue;
+@@ -27735,7 +_,7 @@
+ 
+ 				if (localAI[0] == 0f && this.ai[0] < 0f && owner == Main.myPlayer) {
+ 					localAI[0] = 5f;
+-					for (int num1057 = 0; num1057 < 200; num1057++) {
++					for (int num1057 = 0; num1057 < Main.maxNPCs; num1057++) {
+ 						NPC nPC17 = Main.npc[num1057];
+ 						if (nPC17.CanBeChasedBy(this)) {
+ 							bool flag71 = this.ai[0] < 0f || Main.npc[(int)this.ai[0]].Distance(base.Center) > nPC17.Distance(base.Center);
+@@ -27954,7 +_,7 @@
+ 			if (!(this.ai[0] >= 40f))
+ 				return;
+ 
+-			for (int num1070 = 0; num1070 < 200; num1070++) {
++			for (int num1070 = 0; num1070 < Main.maxNPCs; num1070++) {
+ 				NPC nPC18 = Main.npc[num1070];
+ 				if (nPC18.active && nPC18.damage >= 1 && nPC18.lifeMax >= 30 && !(Distance(nPC18.Center) > 1000f) && nPC18.type != 564 && nPC18.type != 565) {
+ 					int num1071 = 500;
 @@ -28341,8 +_,11 @@
  				NetMessage.SendData(32, -1, -1, null, chestIndex, num);
  		}
@@ -1526,6 +1859,24 @@
  	}
  
  	private void AI_111_DryadsWard()
+@@ -28419,7 +_,7 @@
+ 		}
+ 
+ 		if (ai[0] >= 30f && ai[0] % 10f == 0f && Main.netMode != 1) {
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				NPC nPC = Main.npc[i];
+ 				if (nPC.type != 488 && nPC.active && Distance(nPC.Center) <= num) {
+ 					if (nPC.townNPC && (nPC.FindBuffIndex(165) == -1 || nPC.buffTime[nPC.FindBuffIndex(165)] <= 20))
+@@ -28610,7 +_,7 @@
+ 		bool flag = false;
+ 		float num3 = 0f;
+ 		float num4 = 0f;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			if (!Main.npc[i].CanBeChasedBy(this))
+ 				continue;
+ 
 @@ -28937,7 +_,7 @@
  	private void AI_190_NightsEdge()
  	{
@@ -1544,6 +1895,15 @@
  			if (soundEffectInstance != null)
  				soundEffectInstance.Volume *= 0.15f * ai[0];
  		}
+@@ -29365,7 +_,7 @@
+ 
+ 		Player player = Main.player[owner];
+ 		bool flag = false;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.active && !nPC.townNPC && !nPC.dontTakeDamage && !nPC.friendly && base.Hitbox.Intersects(nPC.Hitbox)) {
+ 				flag = true;
 @@ -29384,7 +_,7 @@
  		}
  
@@ -1553,15 +1913,27 @@
  			localAI[0] = 1f;
  		}
  	}
-@@ -30317,7 +_,7 @@
+@@ -29586,7 +_,7 @@
+ 				}
+ 
+ 				if (num6 < 0) {
+-					for (int i = 0; i < 200; i++) {
++					for (int i = 0; i < Main.maxNPCs; i++) {
+ 						NPC nPC = Main.npc[i];
+ 						if (nPC.CanBeChasedBy(this) && player.Distance(nPC.Center) < num5) {
+ 							float num8 = Distance(nPC.Center);
+@@ -30317,9 +_,9 @@
  			wetVelocity = velocity;
  	}
  
 -	private void ResetLocalNPCHitImmunity()
 +	public void ResetLocalNPCHitImmunity()
  	{
- 		for (int i = 0; i < 200; i++) {
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			localNPCImmunity[i] = 0;
+ 		}
+ 	}
 @@ -30413,8 +_,11 @@
  				break;
  		}
@@ -1574,6 +1946,15 @@
  		num2 *= num15;
  		num8 *= num15;
  		num9 *= num15;
+@@ -30605,7 +_,7 @@
+ 				localAI[0] += 1f;
+ 				if (localAI[0] >= 20f) {
+ 					localAI[0] = 17f;
+-					for (int i = 0; i < 200; i++) {
++					for (int i = 0; i < Main.maxNPCs; i++) {
+ 						NPC nPC2 = Main.npc[i];
+ 						if (nPC2.CanBeChasedBy(this)) {
+ 							float num22 = Distance(nPC2.Center);
 @@ -30730,7 +_,10 @@
  			}
  		}
@@ -1585,7 +1966,25 @@
  			float num5 = 14f / meleeSpeed;
  			float num6 = 0.9f / meleeSpeed;
  			float num7 = 300f / meleeSpeed;
-@@ -30976,7 +_,7 @@
+@@ -30814,7 +_,7 @@
+ 				localAI[1] += 1f;
+ 				if (localAI[1] > 20f) {
+ 					localAI[1] = 20f;
+-					for (int i = 0; i < 200; i++) {
++					for (int i = 0; i < Main.maxNPCs; i++) {
+ 						if (Main.npc[i].CanBeChasedBy(this)) {
+ 							float num15 = Main.npc[i].position.X + (float)(Main.npc[i].width / 2);
+ 							float num16 = Main.npc[i].position.Y + (float)(Main.npc[i].height / 2);
+@@ -30966,7 +_,7 @@
+ 
+ 				if (!flag2 || ai[0] % 15f == 0f) {
+ 					bool flag3 = false;
+-					for (int i = 0; i < 200; i++) {
++					for (int i = 0; i < Main.maxNPCs; i++) {
+ 						NPC nPC = Main.npc[i];
+ 						if (nPC.active && Distance(nPC.Center) < 320f && nPC.CanBeChasedBy(this) && Collision.CanHitLine(nPC.position, nPC.width, nPC.height, position, 0, 0)) {
+ 							flag3 = true;
+@@ -30976,13 +_,13 @@
  
  					if (flag3) {
  						bool flag4 = false;
@@ -1594,7 +1993,32 @@
  							int num = damage;
  							position = base.Center;
  							int num2 = 0;
-@@ -31891,6 +_,14 @@
+ 							float num3 = 0f;
+ 							_medusaHeadTargetList.Clear();
+-							for (int j = 0; j < 200; j++) {
++							for (int j = 0; j < Main.maxNPCs; j++) {
+ 								NPC nPC2 = Main.npc[j];
+ 								float num4 = Distance(nPC2.Center);
+ 								if (nPC2.active && num4 < 320f && nPC2.CanBeChasedBy(this) && Collision.CanHitLine(nPC2.position, nPC2.width, nPC2.height, position, 0, 0))
+@@ -31313,7 +_,7 @@
+ 	private void AI_120_StardustGuardian_FindTarget(float lookupRange, ref int targetNPCIndex, ref float distanceToClosestTarget)
+ 	{
+ 		Vector2 center = Main.player[owner].Center;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.CanBeChasedBy(this)) {
+ 				float num = center.Distance(nPC.Center);
+@@ -31433,7 +_,7 @@
+ 	{
+ 		NPC result = null;
+ 		float num = maxRange;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.CanBeChasedBy(this) && localNPCImmunity[i] == 0 && (!checkCanHit || Collision.CanHitLine(position, width, height, nPC.position, nPC.width, nPC.height))) {
+ 				float num2 = Distance(nPC.Center);
+@@ -31891,11 +_,19 @@
  		return result;
  	}
  
@@ -1609,6 +2033,12 @@
  	public int FindTargetWithLineOfSight(float maxRange = 800f)
  	{
  		float num = maxRange;
+ 		int result = -1;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			bool flag = nPC.CanBeChasedBy(this);
+ 			if (localNPCImmunity[i] != 0)
 @@ -32362,7 +_,10 @@
  				break;
  		}
@@ -1655,6 +2085,15 @@
  	}
  
  	private void AI_016()
+@@ -33180,7 +_,7 @@
+ 				ai[0] += 1f;
+ 				if (ai[0] > 30f) {
+ 					ai[0] = 30f;
+-					for (int m = 0; m < 200; m++) {
++					for (int m = 0; m < Main.maxNPCs; m++) {
+ 						if (Main.npc[m].CanBeChasedBy(this)) {
+ 							float num19 = Main.npc[m].position.X + (float)(Main.npc[m].width / 2);
+ 							float num20 = Main.npc[m].position.Y + (float)(Main.npc[m].height / 2);
 @@ -33733,6 +_,13 @@
  	public static void GetWhipSettings(Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier)
  	{
@@ -1669,6 +2108,33 @@
  		segments = 20;
  		rangeMultiplier = 1f;
  		switch (proj.type) {
+@@ -34203,7 +_,7 @@
+ 			if (attackTarget >= 0)
+ 				return;
+ 
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				NPC nPC = Main.npc[i];
+ 				if (nPC.CanBeChasedBy(this) && IsInRangeOfMeOrMyOwner(nPC, num, out var myDistance2, out var playerDistance2, out var closerIsMe2) && (!skipIfCannotHitWithOwnBody || CanHitWithOwnBody(nPC)) && (customEliminationCheck == null || customEliminationCheck(nPC, attackTarget))) {
+ 					attackTarget = i;
+@@ -34228,7 +_,7 @@
+ 		Vector2 center = Main.player[owner].Center;
+ 		Rectangle value = Utils.CenteredRectangle(center, new Vector2(1600f, 800f));
+ 		int num = Main.player[owner].ownedProjectileCounts[831] + 1;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.CanBeChasedBy(this) && nPC.Hitbox.Intersects(value))
+ 				list.Add(nPC);
+@@ -35777,7 +_,7 @@
+ 				return ownerMinionAttackTargetNPC.whoAmI;
+ 		}
+ 
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.CanBeChasedBy(this) && (nPC.boss || !blackListedTargets.Contains(i))) {
+ 				float num2 = nPC.Distance(center);
 @@ -36320,6 +_,9 @@
  				if (num3 > (float)num9)
  					ai[0] = 1f;
@@ -1741,6 +2207,15 @@
  
  	private void AI_147_Celeb2Rocket()
  	{
+@@ -36610,7 +_,7 @@
+ 				bool flag = false;
+ 				int num12 = 0;
+ 				if (ai[num3] == 0f) {
+-					for (int i = 0; i < 200; i++) {
++					for (int i = 0; i < Main.maxNPCs; i++) {
+ 						if (Main.npc[i].CanBeChasedBy(this) && (ai[num3] == 0f || ai[num3] == (float)(i + 1))) {
+ 							float num13 = Main.npc[i].position.X + (float)(Main.npc[i].width / 2);
+ 							float num14 = Main.npc[i].position.Y + (float)(Main.npc[i].height / 2);
 @@ -36701,7 +_,7 @@
  			return;
  		}
@@ -1774,6 +2249,96 @@
  			if (Main.netMode == 1)
  				NetMessage.SendData(21, -1, -1, null, number, 1f);
  		}
+@@ -37861,7 +_,7 @@
+ 			else if (ai[1] == 1f && owner == Main.myPlayer) {
+ 				int num35 = -1;
+ 				float num36 = num29;
+-				for (int num37 = 0; num37 < 200; num37++) {
++				for (int num37 = 0; num37 < Main.maxNPCs; num37++) {
+ 					if (Main.npc[num37].active && Main.npc[num37].CanBeChasedBy(this)) {
+ 						Vector2 center3 = Main.npc[num37].Center;
+ 						float num38 = Vector2.Distance(center3, base.Center);
+@@ -39037,7 +_,7 @@
+ 			Rectangle hitbox = base.Hitbox;
+ 			hitbox.Offset((int)velocity.X, (int)velocity.Y);
+ 			bool flag2 = false;
+-			for (int num129 = 0; num129 < 200; num129++) {
++			for (int num129 = 0; num129 < Main.maxNPCs; num129++) {
+ 				NPC nPC = Main.npc[num129];
+ 				if (nPC.active && !nPC.dontTakeDamage && nPC.immune[owner] == 0 && localNPCImmunity[num129] == 0 && nPC.Hitbox.Intersects(hitbox) && !nPC.friendly) {
+ 					flag2 = true;
+@@ -39793,7 +_,7 @@
+ 			bool flag5 = false;
+ 			int num189 = 0;
+ 			if (ai[1] == 0f) {
+-				for (int num190 = 0; num190 < 200; num190++) {
++				for (int num190 = 0; num190 < Main.maxNPCs; num190++) {
+ 					if (Main.npc[num190].CanBeChasedBy(this) && (ai[1] == 0f || ai[1] == (float)(num190 + 1))) {
+ 						float num191 = Main.npc[num190].position.X + (float)(Main.npc[num190].width / 2);
+ 						float num192 = Main.npc[num190].position.Y + (float)(Main.npc[num190].height / 2);
+@@ -39948,7 +_,7 @@
+ 			if (numUpdates == 0) {
+ 				int num206 = -1;
+ 				float num207 = 60f;
+-				for (int num208 = 0; num208 < 200; num208++) {
++				for (int num208 = 0; num208 < Main.maxNPCs; num208++) {
+ 					NPC nPC2 = Main.npc[num208];
+ 					if (nPC2.CanBeChasedBy(this)) {
+ 						float num209 = Distance(nPC2.Center);
+@@ -40251,7 +_,7 @@
+ 				if (ai[0] > 20f) {
+ 					ai[0] -= 1f;
+ 					if (ai[1] == 0f) {
+-						for (int num233 = 0; num233 < 200; num233++) {
++						for (int num233 = 0; num233 < Main.maxNPCs; num233++) {
+ 							if (Main.npc[num233].CanBeChasedBy(this) && (ai[1] == 0f || ai[1] == (float)(num233 + 1))) {
+ 								float num234 = Main.npc[num233].position.X + (float)(Main.npc[num233].width / 2);
+ 								float num235 = Main.npc[num233].position.Y + (float)(Main.npc[num233].height / 2);
+@@ -42351,7 +_,7 @@
+ 
+ 				bool flag12 = false;
+ 				int num87 = -1;
+-				for (int num88 = 0; num88 < 200; num88++) {
++				for (int num88 = 0; num88 < Main.maxNPCs; num88++) {
+ 					if (!Main.npc[num88].CanBeChasedBy(this))
+ 						continue;
+ 
+@@ -43307,7 +_,7 @@
+ 					}
+ 
+ 					if (num122 == -1) {
+-						for (int num127 = 0; num127 < 200; num127++) {
++						for (int num127 = 0; num127 < Main.maxNPCs; num127++) {
+ 							if (!Main.npc[num127].CanBeChasedBy(this))
+ 								continue;
+ 
+@@ -43430,7 +_,7 @@
+ 					}
+ 
+ 					if (num147 == -1) {
+-						for (int num149 = 0; num149 < 200; num149++) {
++						for (int num149 = 0; num149 < Main.maxNPCs; num149++) {
+ 							if (!Main.npc[num149].CanBeChasedBy(this))
+ 								continue;
+ 
+@@ -46072,7 +_,7 @@
+ 			}
+ 
+ 			if (!flag) {
+-				for (int n = 0; n < 200; n++) {
++				for (int n = 0; n < Main.maxNPCs; n++) {
+ 					NPC nPC = Main.npc[n];
+ 					if (nPC.CanBeChasedBy(this)) {
+ 						Vector2 vector4 = nPC.position + nPC.Size * vector2;
+@@ -46104,7 +_,7 @@
+ 			}
+ 
+ 			if (!flag) {
+-				for (int num19 = 0; num19 < 200; num19++) {
++				for (int num19 = 0; num19 < Main.maxNPCs; num19++) {
+ 					NPC nPC2 = Main.npc[num19];
+ 					if (!nPC2.CanBeChasedBy(this))
+ 						continue;
 @@ -46762,7 +_,7 @@
  			}
  
@@ -1813,6 +2378,15 @@
  				if (player.channel && flag10 && !player.noItems && !player.CCed) {
  					if (ai[0] == 1f) {
  						Vector2 center2 = base.Center;
+@@ -47938,7 +_,7 @@
+ 				if (type == 603)
+ 					num7 = 320f;
+ 
+-				for (int j = 0; j < 200; j++) {
++				for (int j = 0; j < Main.maxNPCs; j++) {
+ 					if (Main.npc[j].CanBeChasedBy(this)) {
+ 						float num8 = Main.npc[j].position.X + (float)(Main.npc[j].width / 2);
+ 						float num9 = Main.npc[j].position.Y + (float)(Main.npc[j].height / 2);
 @@ -48032,7 +_,11 @@
  				localAI[0] += (float)Main.rand.Next(10, 31) * 0.1f;
  
@@ -1825,6 +2399,15 @@
  			float num2 = ProjectileID.Sets.YoyosLifeTimeMultiplier[type];
  			if (num2 != -1f && num > num2)
  				ai[0] = -1f;
+@@ -48051,7 +_,7 @@
+ 
+ 				vector *= 0.25f;
+ 				vector += vector2;
+-				for (int j = 0; j < 200; j++) {
++				for (int j = 0; j < Main.maxNPCs; j++) {
+ 					if (Main.npc[j].CanBeChasedBy(this)) {
+ 						float num4 = Main.npc[j].position.X + (float)(Main.npc[j].width / 2);
+ 						float num5 = Main.npc[j].position.Y + (float)(Main.npc[j].height / 2);
 @@ -48120,12 +_,23 @@
  		if (Main.player[owner].yoyoString)
  			num10 = num10 * 1.25f + 30f;
@@ -1849,6 +2432,24 @@
  		num9 = 5f + num8 / 2f;
  		if (flag)
  			num9 += 20f;
+@@ -48478,7 +_,7 @@
+ 				return num;
+ 		}
+ 
+-		for (int j = 0; j < 200; j++) {
++		for (int j = 0; j < Main.maxNPCs; j++) {
+ 			NPC nPC = Main.npc[j];
+ 			if (!nPC.CanBeChasedBy(this))
+ 				continue;
+@@ -48515,7 +_,7 @@
+ 				return num;
+ 		}
+ 
+-		for (int j = 0; j < 200; j++) {
++		for (int j = 0; j < Main.maxNPCs; j++) {
+ 			NPC nPC = Main.npc[j];
+ 			if (!nPC.CanBeChasedBy(this))
+ 				continue;
 @@ -48719,7 +_,7 @@
  				if (tileSafely2.active() && Main.tileSolid[tileSafely2.type] && !Main.tileSolidTop[tileSafely2.type])
  					continue;
@@ -1858,6 +2459,24 @@
  				for (int k = 0; k < num5; k++) {
  					Dust obj = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
  					obj.velocity.Y -= 3f + (float)num4 * 1.5f;
+@@ -48867,7 +_,7 @@
+ 
+ 		if (ai[0] == 0f) {
+ 			bool flag = false;
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				NPC nPC = Main.npc[i];
+ 				if (nPC.CanBeChasedBy(this) && nPC.Hitbox.Distance(base.Center) < (float)(width / 2) && Colliding(base.Hitbox, nPC.Hitbox)) {
+ 					flag = true;
+@@ -49003,7 +_,7 @@
+ 			localAI[0] = 3f;
+ 			bool flag = false;
+ 			Rectangle rectangle = Utils.CenteredRectangle(base.Center + new Vector2(0f, -num2), new Vector2(num2 * 3));
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				NPC nPC = Main.npc[i];
+ 				if (nPC.CanBeChasedBy(this) && rectangle.Intersects(nPC.Hitbox)) {
+ 					flag = true;
 @@ -49248,7 +_,7 @@
  		}
  	}
@@ -1935,6 +2554,24 @@
  		}
  		else if (type == 614) {
  			for (int num143 = 0; num143 < 10; num143++) {
+@@ -52112,7 +_,7 @@
+ 				int num307 = Main.rand.Next(4, 8);
+ 				int[] array = new int[num307];
+ 				int num308 = 0;
+-				for (int num309 = 0; num309 < 200; num309++) {
++				for (int num309 = 0; num309 < Main.maxNPCs; num309++) {
+ 					if (!Main.npc[num309].CanBeChasedBy(this, ignoreDontTakeDamage: true))
+ 						continue;
+ 
+@@ -56299,7 +_,7 @@
+ 					player3.AddBuff(num1003, 1800, quiet: false);
+ 			}
+ 
+-			for (int num1005 = 0; num1005 < 200; num1005++) {
++			for (int num1005 = 0; num1005 < Main.maxNPCs; num1005++) {
+ 				NPC nPC = Main.npc[num1005];
+ 				if (nPC.active && nPC.life > 0 && Vector2.Distance(base.Center, nPC.Center) < num1002)
+ 					nPC.AddBuff(num1003, 1800);
 @@ -56405,6 +_,16 @@
  					int num1023 = (int)(position.Y + (float)(height / 2)) / 16;
  					int num1024 = 0;

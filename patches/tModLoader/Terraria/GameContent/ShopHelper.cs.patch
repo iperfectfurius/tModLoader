@@ -178,6 +178,15 @@
  
  	private List<NPC> GetNearbyResidentNPCs(NPC npc, out int npcsWithinHouse, out int npcsWithinVillage)
  	{
+@@ -278,7 +_,7 @@
+ 		if (npc.homeless)
+ 			value = new Vector2(npc.Center.X / 16f, npc.Center.Y / 16f);
+ 
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			if (i == npc.whoAmI)
+ 				continue;
+ 
 @@ -325,7 +_,8 @@
  	private bool IsPlayerInEvilBiomes(Player player)
  	{

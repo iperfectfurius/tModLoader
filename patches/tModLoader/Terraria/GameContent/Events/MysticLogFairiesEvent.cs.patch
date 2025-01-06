@@ -28,3 +28,12 @@
  			if (Main.rand.Next(oneOverSpawnChance) == 0) {
  				flag = true;
  				break;
+@@ -107,7 +_,7 @@
+ 				num2 = 583;
+ 
+ 			int num3 = NPC.NewNPC(new EntitySource_WorldEvent(), (int)vector.X, (int)vector.Y, num2);
+-			if (Main.netMode == 2 && num3 < 200)
++			if (Main.netMode == 2 && num3 < Main.maxNPCs)
+ 				NetMessage.SendData(23, -1, -1, null, num3);
+ 		}
+ 

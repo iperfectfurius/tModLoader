@@ -195,6 +195,15 @@
  					if (Netplay.Connection.State == 3) {
  						Main.windSpeedCurrent = Main.windSpeedTarget;
  						Netplay.Connection.State = 4;
+@@ -735,7 +_,7 @@
+ 					}
+ 				}
+ 
+-				for (int num89 = 0; num89 < 200; num89++) {
++				for (int num89 = 0; num89 < Main.maxNPCs; num89++) {
+ 					if (Main.npc[num89].active)
+ 						NetMessage.TrySendData(23, whoAmI, -1, null, num89);
+ 				}
 @@ -745,7 +_,7 @@
  						NetMessage.TrySendData(27, whoAmI, -1, null, num90);
  				}
@@ -609,6 +618,15 @@
  					Main.tile[num237, num238].liquid = b15;
  					Main.tile[num237, num238].liquidType(liquidType);
  					if (Main.netMode == 2) {
+@@ -2188,7 +_,7 @@
+ 			}
+ 			case 56: {
+ 				int num27 = reader.ReadInt16();
+-				if (num27 >= 0 && num27 < 200) {
++				if (num27 >= 0 && num27 < Main.maxNPCs) {
+ 					if (Main.netMode == 1) {
+ 						string givenName = reader.ReadString();
+ 						Main.npc[num27].GivenName = givenName;
 @@ -2304,7 +_,7 @@
  				if (Main.netMode != 2)
  					break;
@@ -618,6 +636,15 @@
  					if (!NPC.AnyNPCs(num216))
  						NPC.SpawnOnPlayer(num215, num216);
  				}
+@@ -2581,7 +_,7 @@
+ 					if (Main.netMode == 2)
+ 						who = whoAmI;
+ 
+-					if (num227 < 200 && num227 >= 0)
++					if (num227 < 500 && num227 >= 0)
+ 						NPC.CatchNPC(num227, who);
+ 				}
+ 				break;
 @@ -2708,7 +_,7 @@
  				if (Main.netMode == 1) {
  					int num103 = reader.ReadInt16();
@@ -681,6 +708,15 @@
  					break;
  				}
  			}
+@@ -2871,7 +_,7 @@
+ 				int num173 = reader.ReadInt32();
+ 				float num174 = reader.ReadSingle();
+ 				float num175 = reader.ReadSingle();
+-				if (num172 >= 0 && num172 <= 200) {
++				if (num172 >= 0 && num172 <= Main.maxNPCs) {
+ 					if (Main.netMode == 1) {
+ 						Main.npc[num172].moneyPing(new Vector2(num174, num175));
+ 						Main.npc[num172].extraValue = num173;
 @@ -3182,7 +_,16 @@
  				break;
  			case 117: {
@@ -799,6 +835,15 @@
  				}
  				break;
  			case 134: {
+@@ -3491,7 +_,7 @@
+ 				if (Main.netMode == 2) {
+ 					int num28 = reader.ReadInt16();
+ 					int buffTypeToRemove = reader.ReadUInt16();
+-					if (num28 >= 0 && num28 < 200)
++					if (num28 >= 0 && num28 < Main.maxNPCs)
+ 						Main.npc[num28].RequestBuffRemoval(buffTypeToRemove);
+ 				}
+ 				break;
 @@ -3587,6 +_,35 @@
  
  				break;

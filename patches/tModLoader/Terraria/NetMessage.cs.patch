@@ -612,6 +612,24 @@
  	public static void SendTileSquare(int whoAmi, int tileX, int tileY, TileChangeType changeType = TileChangeType.None)
  	{
  		int num = 1;
+@@ -2349,7 +_,7 @@
+ 				SendData(10, whoAmi, -1, null, number, i, 200f, num2);
+ 			}
+ 
+-			for (int j = 0; j < 200; j++) {
++			for (int j = 0; j < Main.maxNPCs; j++) {
+ 				if (Main.npc[j].active && Main.npc[j].townNPC) {
+ 					int sectionX2 = Netplay.GetSectionX((int)(Main.npc[j].position.X / 16f));
+ 					int sectionY2 = Netplay.GetSectionY((int)(Main.npc[j].position.Y / 16f));
+@@ -2419,7 +_,7 @@
+ 	private static void SendNPCHousesAndTravelShop(int plr)
+ 	{
+ 		bool flag = false;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (!nPC.active)
+ 				continue;
 @@ -2455,7 +_,7 @@
  		}
  

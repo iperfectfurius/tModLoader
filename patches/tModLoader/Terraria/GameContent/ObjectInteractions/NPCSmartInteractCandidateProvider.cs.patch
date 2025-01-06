@@ -6,9 +6,12 @@
  
  namespace Terraria.GameContent.ObjectInteractions;
  
-@@ -44,7 +_,7 @@
+@@ -42,9 +_,9 @@
+ 		bool flag = false;
+ 		int num = -1;
  		float npcDistanceFromCursor = -1f;
- 		for (int i = 0; i < 200; i++) {
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			NPC nPC = Main.npc[i];
 -			if (nPC.active && nPC.townNPC && nPC.Hitbox.Intersects(value) && !flag) {
 +			if (nPC.active && (NPCLoader.CanChat(nPC) ?? nPC.townNPC) && nPC.Hitbox.Intersects(value) && !flag) {

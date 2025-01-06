@@ -46,6 +46,24 @@
  	}
  
  	private void TryFindingNPCToTrack()
+@@ -80,7 +_,7 @@
+ 		Rectangle value = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+ 		value.Inflate(5000, 5000);
+ 		float num = float.PositiveInfinity;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.active && nPC.Hitbox.Intersects(value)) {
+ 				float num2 = nPC.Distance(Main.LocalPlayer.Center);
+@@ -92,7 +_,7 @@
+ 
+ 	public bool TryTracking(int npcIndex)
+ 	{
+-		if (npcIndex < 0 || npcIndex > 200)
++		if (npcIndex < 0 || npcIndex > Main.maxNPCs)
+ 			return false;
+ 
+ 		NPC nPC = Main.npc[npcIndex];
 @@ -103,14 +_,19 @@
  		bigProgressBarInfo.npcIndexToAimAt = npcIndex;
  		BigProgressBarInfo info = bigProgressBarInfo;

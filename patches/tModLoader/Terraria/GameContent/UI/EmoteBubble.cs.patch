@@ -103,7 +103,7 @@
  	public static int NewBubble(int emoticon, WorldUIAnchor bubbleAnchor, int time)
  	{
  		if (Main.netMode == 1)
-@@ -100,26 +_,45 @@
+@@ -100,29 +_,48 @@
  		}
  
  		OnBubbleChange(emoteBubble.ID);
@@ -150,7 +150,11 @@
 +	/// <param name="player"></param>
  	public static void CheckForNPCsToReactToEmoteBubble(int emoteID, Player player)
  	{
- 		for (int i = 0; i < 200; i++) {
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC != null && nPC.active && nPC.aiStyle == 7 && nPC.townNPC && !(nPC.ai[0] >= 2f) && ((player.CanBeTalkedTo && player.Distance(nPC.Center) < 200f) || !Collision.CanHitLine(nPC.Top, 0, 0, player.Top, 0, 0))) {
+ 				int direction = (nPC.position.X < player.position.X).ToDirectionInt();
 @@ -145,7 +_,11 @@
  
  	private void Update()
@@ -239,6 +243,15 @@
  	public static void MakeLocalPlayerEmote(int emoteId)
  	{
  		if (Main.netMode == 0) {
+@@ -238,7 +_,7 @@
+ 		Player plr = Main.player[Player.FindClosest(((NPC)anchor.entity).Center, 0, 0)];
+ 		List<int> list = new List<int>();
+ 		bool flag = false;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			if (Main.npc[i].active && Main.npc[i].boss)
+ 				flag = true;
+ 		}
 @@ -277,7 +_,15 @@
  			ProbeCombat(list);
  		}
@@ -256,7 +269,7 @@
  			emote = list[Main.rand.Next(list.Count)];
  	}
  
-@@ -369,7 +_,7 @@
+@@ -369,17 +_,17 @@
  
  	private void ProbeTownNPCs(List<int> list)
  	{
@@ -265,7 +278,10 @@
  			CountNPCs[i] = 0;
  		}
  
-@@ -379,7 +_,7 @@
+-		for (int j = 0; j < 200; j++) {
++		for (int j = 0; j < Main.maxNPCs; j++) {
+ 			if (Main.npc[j].active)
+ 				CountNPCs[Main.npc[j].type]++;
  		}
  
  		int type = ((NPC)anchor.entity).type;

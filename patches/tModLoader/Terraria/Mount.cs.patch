@@ -287,6 +287,15 @@
  		if (_shouldSuperCart) {
  			CastSuperCartLaser(mountedPlayer);
  			float num = 1f + Math.Abs(mountedPlayer.velocity.X) / RunSpeed * 2.5f;
+@@ -3667,7 +_,7 @@
+ 				bool flag = false;
+ 				float num9 = 1500f;
+ 				float num10 = 850f;
+-				for (int i = 0; i < 200; i++) {
++				for (int i = 0; i < Main.maxNPCs; i++) {
+ 					NPC nPC = Main.npc[i];
+ 					if (!nPC.CanBeChasedBy(this))
+ 						continue;
 @@ -3747,10 +_,13 @@
  					else
  						Lighting.AddLight(mountedPlayer.Center + Vector2.UnitX * mountedPlayer.direction * 20f, vector9.X, vector9.Y, vector9.Z);
@@ -301,6 +310,15 @@
  				}
  				if (mountedPlayer.statLife <= mountedPlayer.statLifeMax2 / 2)
  					mountedPlayer.MountFishronSpecialCounter = 60f;
+@@ -3901,7 +_,7 @@
+ 		int damage = 60;
+ 		int num2 = 0;
+ 		float num3 = 0f;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.active && nPC.immune[mountedPlayer.whoAmI] <= 0 && !nPC.dontTakeDamage && nPC.Distance(minecartMechPoint) < 300f && nPC.CanBeChasedBy(mountedPlayer) && Collision.CanHitLine(nPC.position, nPC.width, nPC.height, minecartMechPoint, 0, 0) && Math.Abs(MathHelper.WrapAngle(MathHelper.WrapAngle(nPC.AngleFrom(minecartMechPoint)) - MathHelper.WrapAngle((mountedPlayer.fullRotation + (float)num == -1f) ? ((float)Math.PI) : 0f))) < (float)Math.PI / 4f) {
+ 				minecartMechPoint = GetMinecartMechPoint(mountedPlayer, -20, -39);
 @@ -4009,6 +_,9 @@
  	public bool AimAbility(Player mountedPlayer, Vector2 mousePosition)
  	{

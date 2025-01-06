@@ -22,3 +22,12 @@
  				writer.Write(item);
  			}
  		}
+@@ -95,7 +_,7 @@
+ 				_playerHitboxesForBestiary.Add(player.HitboxForBestiaryNearbyCheck);
+ 		}
+ 
+-		for (int j = 0; j < 200; j++) {
++		for (int j = 0; j < 500; j++) {
+ 			NPC nPC = Main.npc[j];
+ 			if (!nPC.active || !nPC.CountsAsACritter || _wasSeenNearPlayerByNetId.Contains(nPC.netID))
+ 				continue;

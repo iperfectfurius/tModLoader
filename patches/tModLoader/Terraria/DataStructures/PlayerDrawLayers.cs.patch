@@ -461,3 +461,12 @@
  			return;
  
  		Rectangle bodyFrame = drawinfo.drawPlayer.bodyFrame;
+@@ -3159,7 +_,7 @@
+ 	{
+ 		List<DrawData> drawDataCache = drawinfo.DrawDataCache;
+ 		if (spriteBuffer == null)
+-			spriteBuffer = new SpriteDrawBuffer(Main.graphics.GraphicsDevice, 200);
++			spriteBuffer = new SpriteDrawBuffer(Main.graphics.GraphicsDevice, Main.maxNPCs);
+ 		else
+ 			spriteBuffer.CheckGraphicsDevice(Main.graphics.GraphicsDevice);
+ 

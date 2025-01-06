@@ -1,0 +1,11 @@
+--- src/TerrariaNetCore/Terraria/GameContent/Events/LanternNight.cs
++++ src/tModLoader/Terraria/GameContent/Events/LanternNight.cs
+@@ -57,7 +_,7 @@
+ 
+ 	private static bool BossIsActive()
+ 	{
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.active && (nPC.boss || (nPC.type >= 13 && nPC.type <= 15)))
+ 				return true;
