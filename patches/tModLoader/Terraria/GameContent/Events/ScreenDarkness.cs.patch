@@ -1,0 +1,11 @@
+--- src/TerrariaNetCore/Terraria/GameContent/Events/ScreenDarkness.cs
++++ src/tModLoader/Terraria/GameContent/Events/ScreenDarkness.cs
+@@ -13,7 +_,7 @@
+ 		float value = 0f;
+ 		float amount = 1f / 60f;
+ 		Vector2 mountedCenter = Main.player[Main.myPlayer].MountedCenter;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			if (Main.npc[i].active && Main.npc[i].type == 370 && Main.npc[i].Distance(mountedCenter) < 3000f && (Main.npc[i].ai[0] >= 10f || (Main.npc[i].ai[0] == 9f && Main.npc[i].ai[2] > 120f))) {
+ 				value = 0.95f;
+ 				frontColor = new Color(0, 0, 120) * 0.3f;

@@ -1,0 +1,89 @@
+--- src/TerrariaNetCore/Terraria/GameContent/Events/DD2Event.cs
++++ src/tModLoader/Terraria/GameContent/Events/DD2Event.cs
+@@ -374,7 +_,7 @@
+ 		Main.npc[num].ai[1] = 2f;
+ 		Main.npc[num].ai[0] = 2f;
+ 		Main.npc[num].netUpdate = true;
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < 500; i++) {
+ 			if (Main.npc[i] != null && Main.npc[i].active && Main.npc[i].type == 549) {
+ 				Main.npc[i].ai[0] = 0f;
+ 				Main.npc[i].ai[1] = 1f;
+@@ -511,7 +_,7 @@
+ 
+ 	public static void ClearAllDD2HostilesInGame()
+ 	{
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < 500; i++) {
+ 			if (Main.npc[i].active && NPCID.Sets.BelongsToInvasionOldOnesArmy[Main.npc[i].type]) {
+ 				Main.npc[i].active = false;
+ 				if (Main.netMode == 2)
+@@ -610,7 +_,7 @@
+ 		_arenaHitboxingCooldown = 60;
+ 		Vector2 vector = new Vector2(float.MaxValue, float.MaxValue);
+ 		Vector2 vector2 = new Vector2(0f, 0f);
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < 500; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC.active && (nPC.type == 549 || nPC.type == 548)) {
+ 				Vector2 topLeft = nPC.TopLeft;
+@@ -643,7 +_,7 @@
+ 
+ 	public static void DropMedals(int numberOfMedals)
+ 	{
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < 500; i++) {
+ 			if (Main.npc[i].active && Main.npc[i].type == 548)
+ 				Main.npc[i].DropItemInstanced(Main.npc[i].position, Main.npc[i].Size, 3817, numberOfMedals, interactionRequired: false);
+ 		}
+@@ -755,7 +_,7 @@
+ 
+ 	private static void DropStarterCrystals()
+ 	{
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < 500; i++) {
+ 			if (Main.npc[i].active && Main.npc[i].type == 548) {
+ 				for (int j = 0; j < 5; j++) {
+ 					Item.NewItem(new EntitySource_WorldEvent(), Main.npc[i].position, Main.npc[i].width, Main.npc[i].height, 3822, 2);
+@@ -911,7 +_,7 @@
+ 				break;
+ 		}
+ 
+-		if (Main.netMode == 2 && num4 < 200)
++		if (Main.netMode == 2 && num4 < Main.maxNPCs)
+ 			NetMessage.SendData(23, -1, -1, null, num4);
+ 	}
+ 
+@@ -1222,10 +_,10 @@
+ 				break;
+ 		}
+ 
+-		if (Main.netMode == 2 && num7 < 200)
++		if (Main.netMode == 2 && num7 < Main.maxNPCs)
+ 			NetMessage.SendData(23, -1, -1, null, num7);
+ 
+-		if (Main.netMode == 2 && num8 < 200)
++		if (Main.netMode == 2 && num8 < Main.maxNPCs)
+ 			NetMessage.SendData(23, -1, -1, null, num8);
+ 	}
+ 
+@@ -1404,8 +_,8 @@
+ 			num7 = (int)((double)num7 * 1.3);
+ 		}
+ 
+-		int num8 = 200;
+-		int num9 = 200;
++		int num8 = Main.maxNPCs;
++		int num9 = Main.maxNPCs;
+ 		switch (NPC.waveNumber) {
+ 			case 1:
+ 				if (Main.rand.Next(18) == 0 && NPC.CountNPCS(563) < num2) {
+@@ -1538,7 +_,7 @@
+ 	public static bool IsStandActive(int x, int y)
+ 	{
+ 		Vector2 target = new Vector2(x * 16 + 8, y * 16 + 8);
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (nPC != null && nPC.active && nPC.type == 548)
+ 				return nPC.Bottom.Distance(target) < 36f;

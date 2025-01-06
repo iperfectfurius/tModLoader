@@ -1,0 +1,11 @@
+--- src/TerrariaNetCore/Terraria/GameContent/Shaders/WaterShaderData.cs
++++ src/tModLoader/Terraria/GameContent/Shaders/WaterShaderData.cs
+@@ -154,7 +_,7 @@
+ 		tileBatch.Begin();
+ 		GameShaders.Misc["WaterDistortionObject"].Apply();
+ 		if (_useNPCWaves) {
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				if (Main.npc[i] == null || !Main.npc[i].active || (!Main.npc[i].wet && Main.npc[i].wetCount == 0) || !Collision.CheckAABBvAABBCollision(screenPosition, dimensions, Main.npc[i].position - vector3, Main.npc[i].Size + vector3))
+ 					continue;
+ 

@@ -1,0 +1,11 @@
+--- src/TerrariaNetCore/Terraria/Utilities/NPCUtils.cs
++++ src/tModLoader/Terraria/Utilities/NPCUtils.cs
+@@ -173,7 +_,7 @@
+ 		int nearestTankIndex = -1;
+ 		TargetType tankType = TargetType.Player;
+ 		if (flags.HasFlag(TargetSearchFlag.NPCs)) {
+-			for (int i = 0; i < 200; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
+ 				NPC nPC = Main.npc[i];
+ 				if (nPC.active && nPC.whoAmI != searcher.whoAmI && (npcFilter == null || npcFilter(nPC))) {
+ 					float num3 = Vector2.DistanceSquared(position, nPC.Center);

@@ -142,7 +142,7 @@
  
  		Point16 positionInTiles = info.PositionInTiles;
  		return DoesPositionHaveEnoughNPCs(necessaryNPCCount, positionInTiles);
-@@ -198,6 +_,8 @@
+@@ -198,9 +_,11 @@
  
  	public static bool DoesPositionHaveEnoughNPCs(int necessaryNPCCount, Point16 centerPoint)
  	{
@@ -150,7 +150,11 @@
 +			return true;
  		Rectangle rectangle = new Rectangle(centerPoint.X - Main.buffScanAreaWidth / 2, centerPoint.Y - Main.buffScanAreaHeight / 2, Main.buffScanAreaWidth, Main.buffScanAreaHeight);
  		int num = necessaryNPCCount;
- 		for (int i = 0; i < 200; i++) {
+-		for (int i = 0; i < 200; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
+ 			NPC nPC = Main.npc[i];
+ 			if (!nPC.active || !nPC.isLikeATownNPC || nPC.homeless || !rectangle.Contains(nPC.homeTileX, nPC.homeTileY))
+ 				continue;
 @@ -226,6 +_,12 @@
  	{
  		if (Main.netMode != 2 && Main.DroneCameraTracker != null && Main.DroneCameraTracker.IsInUse())
