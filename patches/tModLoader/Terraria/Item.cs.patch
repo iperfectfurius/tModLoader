@@ -2045,6 +2045,24 @@
  		if (Main.netMode == 2 && playerIndexTheItemIsReservedFor != Main.myPlayer) {
  			timeSinceTheItemHasBeenReservedForSomeone++;
  			if (timeSinceTheItemHasBeenReservedForSomeone >= 300) {
+@@ -48230,7 +_,7 @@
+ 			type = 0;
+ 			stack = 0;
+ 			bool flag = false;
+-			for (int j = 0; j < 200; j++) {
++			for (int j = 0; j < Main.maxNPCs; j++) {
+ 				if (Main.npc[j].active && Main.npc[j].type == 22) {
+ 					int num2 = -Main.npc[j].direction;
+ 					if (Main.npc[j].IsNPCValidForBestiaryKillCredit())
+@@ -48248,7 +_,7 @@
+ 
+ 			if (flag) {
+ 				List<int> list = new List<int>();
+-				for (int k = 0; k < 200; k++) {
++				for (int k = 0; k < Main.maxNPCs; k++) {
+ 					if (num <= 0)
+ 						break;
+ 
 @@ -48274,7 +_,7 @@
  
  			NetMessage.SendData(21, -1, -1, null, i);

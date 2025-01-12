@@ -75,6 +75,15 @@
  			}
  		}
  	}
+@@ -184,7 +_,7 @@
+ 	private const string versionStringBecauseTheyreTheSame = "v1.4.4.9";
+ 	public const int curRelease = 279;
+ 	public const string assemblyVersionNumber = "1.4.4.9";
+-	public const string copyrightText = "Copyright © 2022 Re-Logic";
++	public const string copyrightText = "Copyright © 2025 Carritos Garcia Tmodloader";
+ 	public const ulong WorldGeneratorVersion = 1198295875585uL;
+ 	public static int mapDelay = 2;
+ 	public static IAssetRepository Assets;
 @@ -248,17 +_,25 @@
  	};
  	private static bool? _overrideForExpertMode = null;
@@ -783,13 +792,13 @@
  	public static bool terrariasFixedTiming = true;
  	private int splashCounter;
 -	public List<int> DrawCacheNPCsMoonMoon = new List<int>(200);
-+	public List<int> DrawCacheNPCsMoonMoon = new List<int>(500);
++	public List<int> DrawCacheNPCsMoonMoon = new List<int>(Main.maxNPCs);
 -	public List<int> DrawCacheNPCsOverPlayers = new List<int>(200);
-+	public List<int> DrawCacheNPCsOverPlayers = new List<int>(500);
++	public List<int> DrawCacheNPCsOverPlayers = new List<int>(Main.maxNPCs);
 -	public List<int> DrawCacheNPCProjectiles = new List<int>(200);
-+	public List<int> DrawCacheNPCProjectiles = new List<int>(500);
++	public List<int> DrawCacheNPCProjectiles = new List<int>(Main.maxNPCs);
 -	public List<int> DrawCacheNPCsBehindNonSolidTiles = new List<int>(200);
-+	public List<int> DrawCacheNPCsBehindNonSolidTiles = new List<int>(500);
++	public List<int> DrawCacheNPCsBehindNonSolidTiles = new List<int>(Main.maxNPCs);
  	public List<int> DrawCacheProjsBehindNPCsAndTiles = new List<int>(1000);
  	public List<int> DrawCacheProjsBehindNPCs = new List<int>(1000);
  	public List<int> DrawCacheProjsBehindProjectiles = new List<int>(1000);
@@ -5298,6 +5307,15 @@
  				NPC nPC = npc[i];
  				if ((nPC.life == nPC.lifeMax || nPC.dontTakeDamage) && !nPC.dontTakeDamage && nPC.nameOver > 0f && (num == -1 || nPC.Distance(localPlayer.Center) < npc[num].Distance(localPlayer.Center)))
  					num = i;
+@@ -37233,7 +_,7 @@
+ 		}
+ 
+ 		bool flag = false;
+-		for (int num2 = 199; num2 >= 0; num2--) {
++		for (int num2 = Main.maxNPCs -1; num2 >= 0; num2--) {
+ 			if (npc[num2].active && npc[num2].type > 0 && npc[num2].shimmerTransparency == 0f) {
+ 				npc[num2].position += npc[num2].netOffset;
+ 				if (npc[num2].life != npc[num2].lifeMax && !npc[num2].dontTakeDamage) {
 @@ -37306,6 +_,12 @@
  					if (HealthBarDrawSettings == 2)
  						num3 -= 34f;
@@ -5329,7 +5347,12 @@
  			if (npc[i].active && npc[i].type == tailID) {
  				nPC = npc[i];
  				break;
-@@ -37815,7 +_,7 @@
+@@ -37811,11 +_,11 @@
+ 
+ 		spriteBatch.End();
+ 		spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, GameViewMatrix.ZoomMatrix);
+-		Texture2D value = TextureAssets.Extra[199].Value;
++		Texture2D value = TextureAssets.Extra[Main.maxNPCs-1].Value;
  		Vector2 zero = Vector2.Zero;
  		int minionAttackTargetNPC = localPlayer.MinionAttackTargetNPC;
  		Microsoft.Xna.Framework.Rectangle value2 = new Microsoft.Xna.Framework.Rectangle((int)screenPosition.X, (int)screenPosition.Y, screenWidth, screenHeight);
@@ -5447,7 +5470,7 @@
  				if (player[myPlayer].accCritterGuideCounter <= 0) {
  					player[myPlayer].accCritterGuideCounter = 15;
 -					for (int k = 0; k < 200; k++) {
-+					for (int k = 0; k < 500; k++) {
++					for (int k = 0; k < Main.maxNPCs; k++) {
  						if (npc[k].active && npc[k].rarity > num12 && (npc[k].Center - player[myPlayer].Center).Length() < (float)num11) {
  							num13 = k;
  							num12 = npc[k].rarity;
@@ -5456,7 +5479,7 @@
  				}
  
 -				if (num13 >= 0 && num13 < 200 && npc[num13].active && npc[num13].rarity > 0) {
-+				if (num13 >= 0 && num13 < 500 && npc[num13].active && npc[num13].rarity > 0) {
++				if (num13 >= 0 && num13 < Main.maxNPCs && npc[num13].active && npc[num13].rarity > 0) {
  					text2 = npc[num13].GivenOrTypeName;
  					DrawInfoAccs_AdjustInfoTextColorsForNPC(npc[num13], ref infoTextColor, ref infoTextShadowColor);
  				}

@@ -791,7 +791,7 @@
  
  				bool flag4 = true;
 -				for (int i = 0; i < 200 && flag4; i++) {
-+				for (int i = 0; i < 500 && flag4; i++) {
++				for (int i = 0; i < Main.maxNPCs && flag4; i++) {
  					if (!Main.npc[i].active)
  						continue;
  
@@ -1770,7 +1770,7 @@
  					flag52 = true;
  				}
 -				else if (num908 < 0 || num908 >= 200) {
-+				else if (num908 < 0 || num908 >= 500) {
++				else if (num908 < 0 || num908 >= Main.maxNPCs) {
  					flag52 = true;
  				}
  				else if (Main.npc[num908].active && !Main.npc[num908].dontTakeDamage) {
@@ -1779,7 +1779,7 @@
  
  				if (!flag52 && type == 971) {
 -					if (num908 > 0 && num908 < 200 && timeLeft % 2 == 0) {
-+					if (num908 > 0 && num908 < 500 && timeLeft % 2 == 0) {
++					if (num908 > 0 && num908 < Main.maxNPCs && timeLeft % 2 == 0) {
  						Vector2 vector138 = center17 - velocity.SafeNormalize(Vector2.Zero) * 8f;
  						Vector2 value16 = Main.npc[num908].velocity + new Vector2(Main.rand.NextFloatDirection() * 0.35f, 2.5f);
  						Dust dust47 = Dust.NewDustPerfect(vector138, 4, value16, 0, new Color(120, 50, 120), 0.65f);
@@ -1788,7 +1788,7 @@
  
  				if (!flag52 && type == 975) {
 -					if (num908 > 0 && num908 < 200 && timeLeft % 2 == 0) {
-+					if (num908 > 0 && num908 < 500 && timeLeft % 2 == 0) {
++					if (num908 > 0 && num908 < Main.maxNPCs && timeLeft % 2 == 0) {
  						Vector2 vector139 = center17;
  						Vector2 vector140 = velocity.SafeNormalize(Vector2.Zero) * -7f + velocity.SafeNormalize(Vector2.Zero).RotatedByRandom(0.19634954631328583);
  						Dust dust48 = Dust.NewDustPerfect(vector139, 5, Vector2.Zero, 0, default(Color), 1.5f);

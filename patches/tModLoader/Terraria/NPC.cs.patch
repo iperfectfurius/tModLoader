@@ -7,7 +7,7 @@
  using Microsoft.Xna.Framework;
  using Microsoft.Xna.Framework.Graphics;
  using ReLogic.Content;
-@@ -21,12 +_,13 @@
+@@ -21,14 +_,15 @@
  using Terraria.Graphics.Effects;
  using Terraria.ID;
  using Terraria.Localization;
@@ -20,8 +20,11 @@
 -public class NPC : Entity
 +public partial class NPC : Entity
  {
- 	private const int NPC_TARGETS_START = 300;
+-	private const int NPC_TARGETS_START = 300;
++	private const int NPC_TARGETS_START = 500;
  	public bool IsABestiaryIconDummy;
+ 	public bool ForcePartyHatOn;
+ 	public float waterMovementSpeed = 0.5f;
 @@ -48,6 +_,10 @@
  	public static int maxAI = 4;
  	public int netSpam;
@@ -696,7 +699,7 @@
  	public static string GetFullnameByID(int npcID)
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].type == npcID)
  				return Main.npc[i].FullName;
  		}
@@ -716,7 +719,7 @@
  	public static void UpdateFoundActiveNPCs()
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			NPC nPC = Main.npc[i];
 -			if (nPC.active && nPC.type >= 0 && nPC.type < NPCID.Count)
 +			if (nPC.active && nPC.type >= 0)
@@ -815,7 +818,7 @@
  		int num2 = 0;
  		int num3 = 0;
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (!Main.npc[i].active)
  				continue;
  
@@ -1135,7 +1138,7 @@
  			int num7 = (int)Main.npc[i].ai[num2];
  			int num8 = 0;
 -			while (num7 >= 0 && num7 < 200 && ++num8 < 100 && Main.npc[num7].active) {
-+			while (num7 >= 0 && num7 < 500 && ++num8 < 100 && Main.npc[num7].active) {
++			while (num7 >= 0 && num7 < Main.maxNPCs && ++num8 < 100 && Main.npc[num7].active) {
  				if (!averageDirection && (num6 == -1 || Main.npc[num7].Distance(center2) < num5)) {
  					num5 = Main.npc[num7].Distance(center2);
  					num6 = num7;
@@ -1172,7 +1175,7 @@
  		bool flag3 = false;
  		dontTakeDamage = false;
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].type == 246)
  				flag = true;
  
@@ -1199,7 +1202,7 @@
  								Main.npc[num22].velocity.X = vector3.X;
  								Main.npc[num22].velocity.Y = vector3.Y;
 -								if (Main.netMode == 2 && num22 < 200)
-+								if (Main.netMode == 2 && num22 < 500)
++								if (Main.netMode == 2 && num22 < Main.maxNPCs)
  									NetMessage.SendData(23, -1, -1, null, num22);
  							}
  
@@ -1219,7 +1222,7 @@
  						Main.npc[num34].velocity.X = vector7.X;
  						Main.npc[num34].velocity.Y = vector7.Y;
 -						if (Main.netMode == 2 && num34 < 200)
-+						if (Main.netMode == 2 && num34 < 500)
++						if (Main.netMode == 2 && num34 < Main.maxNPCs)
  							NetMessage.SendData(23, -1, -1, null, num34);
  					}
  
@@ -1228,7 +1231,7 @@
  			int num149 = 0;
  			if (Main.expertMode) {
 -				for (int num150 = 0; num150 < 200; num150++) {
-+				for (int num150 = 0; num150 < 500; num150++) {
++				for (int num150 = 0; num150 < Main.maxNPCs; num150++) {
  					if (Main.npc[num150].active && Main.npc[num150].type == type + 1)
  						num149++;
  				}
@@ -1588,7 +1591,7 @@
  							active = false;
  							int num75 = (int)ai[0];
 -							while (num75 > 0 && num75 < 200 && Main.npc[num75].active && Main.npc[num75].aiStyle == aiStyle) {
-+							while (num75 > 0 && num75 < 500 && Main.npc[num75].active && Main.npc[num75].aiStyle == aiStyle) {
++							while (num75 > 0 && num75 < Main.maxNPCs && Main.npc[num75].active && Main.npc[num75].aiStyle == aiStyle) {
  								int num76 = (int)Main.npc[num75].ai[0];
  								Main.npc[num75].active = false;
  								life = 0;
@@ -2839,7 +2842,7 @@
  
  		float num5 = 0f;
 -		for (int j = 0; j < 200; j++) {
-+		for (int j = 0; j < 500; j++) {
++		for (int j = 0; j < Main.maxNPCs; j++) {
  			if (Main.npc[j].active) {
  				switch (Main.npc[j].type) {
  					case 315:
@@ -2865,7 +2868,7 @@
  				}
  				else if (Main.invasionX >= (double)(Main.maxTilesX / 2 - 5) && Main.invasionX <= (double)(Main.maxTilesX / 2 + 5)) {
 -					for (int l = 0; l < 200; l++) {
-+					for (int l = 0; l < 500; l++) {
++					for (int l = 0; l < Main.maxNPCs; l++) {
  						if (Main.npc[l].townNPC && Math.Abs(Main.player[k].position.X - Main.npc[l].Center.X) < (float)num7) {
  							if (Main.rand.Next(3) != 0)
  								flag6 = true;
@@ -3060,7 +3063,7 @@
  				Main.npc[newNPC].SetDefaults(667);
  
 -			if (Main.netMode == 2 && newNPC < 200)
-+			if (Main.netMode == 2 && newNPC < 500)
++			if (Main.netMode == 2 && newNPC < Main.maxNPCs)
  				NetMessage.SendData(23, -1, -1, null, newNPC);
  
  			break;
@@ -3158,7 +3161,7 @@
  		}
  
 -		return 200;
-+		return 500;
++		return Main.maxNPCs;
  	}
  
  	private static int GetAvailableNPCSlot(int Type, int startIndex)
@@ -3189,7 +3192,7 @@
  	public static bool RerollVariationForNPCType(int npcType)
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			NPC nPC = Main.npc[i];
  			if (nPC.active && nPC.type == npcType)
  				return nPC.RerollVariation();
@@ -3412,7 +3415,7 @@
  
  			if ((type == 113 || type == 114) && life <= 0) {
 -				for (int i = 0; i < 200; i++) {
-+				for (int i = 0; i < 500; i++) {
++				for (int i = 0; i < Main.maxNPCs; i++) {
  					if (Main.npc[i].active && (Main.npc[i].type == 113 || Main.npc[i].type == 114))
 -						Main.npc[i].HitEffect(hitDirection, num);
 +						Main.npc[i].HitEffect(hitDirection, num, hit.InstantKill);
@@ -3490,7 +3493,7 @@
  
  			if (Main.netMode != 1) {
 -				for (int j = 0; j < 200; j++) {
-+				for (int j = 0; j < 500; j++) {
++				for (int j = 0; j < Main.maxNPCs; j++) {
  					NPC nPC = Main.npc[j];
  					if (nPC.active && !nPC.buffImmune[189] && Distance(nPC.Center) < 100f && !nPC.dontTakeDamage && nPC.lifeMax > 5 && !nPC.friendly && !nPC.townNPC)
  						nPC.AddBuff(189, 300);
@@ -3563,7 +3566,7 @@
  	{
  		int num = 0;
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].type == Type)
  				num++;
  		}
@@ -3572,7 +3575,7 @@
  	public static bool AnyHelpfulFairies()
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && (Main.npc[i].type == 583 || Main.npc[i].type == 584 || Main.npc[i].type == 585) && Main.npc[i].ai[2] > 1f)
  				return true;
  		}
@@ -3588,7 +3591,7 @@
  	public static bool AnyNPCs(int Type)
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].type == Type)
  				return true;
  		}
@@ -3604,7 +3607,7 @@
  	public static int FindFirstNPC(int Type)
  	{
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].type == Type)
  				return i;
  		}
@@ -3613,7 +3616,7 @@
  	{
  		Rectangle rectangle = new Rectangle(x * 16 - 300, y * 16 - 300, 600, 600);
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active && Main.npc[i].aiStyle == 20) {
  				Rectangle rectangle2 = new Rectangle((int)Main.npc[i].ai[1], (int)Main.npc[i].ai[2], 20, 20);
  				if (rectangle.Intersects(rectangle2))
@@ -3688,7 +3691,7 @@
  	{
  		offSetDelayTime = 180;
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			Main.npc[i].netOffset *= 0f;
  		}
  	}
@@ -3897,7 +3900,7 @@
  
  		Rectangle hitbox = base.Hitbox;
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			NPC nPC = Main.npc[i];
  			if (acceptableNPCIDs[nPC.type] && nPC.active && !nPC.friendly && nPC.damage > 0) {
  				Rectangle npcRect = nPC.Hitbox;
@@ -3945,7 +3948,7 @@
  
  		if (type == 391) {
 -			for (int i = 0; i < 200; i++) {
-+			for (int i = 0; i < 500; i++) {
++			for (int i = 0; i < Main.maxNPCs; i++) {
  				if (Main.npc[i].active && Main.npc[i].type == 390 && Main.npc[i].ai[0] == (float)whoAmI) {
  					cHeight = 62;
  					break;
@@ -3954,7 +3957,7 @@
  
  		if (type == 415) {
 -			for (int j = 0; j < 200; j++) {
-+			for (int j = 0; j < 500; j++) {
++			for (int j = 0; j < Main.maxNPCs; j++) {
  				if (Main.npc[j].active && Main.npc[j].type == 416 && Main.npc[j].ai[0] == (float)whoAmI) {
  					cHeight = 62;
  					break;
@@ -3983,7 +3986,7 @@
  		bool flag17 = false;
  		object obj = Lang.CreateDialogSubstitutionObject(this);
 -		for (int i = 0; i < 200; i++) {
-+		for (int i = 0; i < 500; i++) {
++		for (int i = 0; i < Main.maxNPCs; i++) {
  			if (Main.npc[i].active) {
  				if (Main.npc[i].type == 17)
  					flag = true;
