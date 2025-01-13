@@ -595,7 +595,14 @@
  	public bool HasValidTarget {
  		get {
  			if (!HasPlayerTarget || !Main.player[target].active || Main.player[target].dead || Main.player[target].ghost) {
-@@ -440,6 +_,9 @@
+@@ -434,12 +_,15 @@
+ 	public bool HasNPCTarget {
+ 		get {
+ 			if (target >= 300)
+-				return target < 500;
++				return target < 700;
+ 
+ 			return false;
  		}
  	}
  
